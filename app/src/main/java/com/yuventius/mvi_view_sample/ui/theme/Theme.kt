@@ -52,7 +52,7 @@ fun MVIViewSampleTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = NotoSansTypography,
         content = content
     )
 }

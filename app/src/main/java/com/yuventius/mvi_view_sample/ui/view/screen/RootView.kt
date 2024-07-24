@@ -14,6 +14,7 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.yuventius.mvi_view_sample.ext.route
 import com.yuventius.mvi_view_sample.ui.view.component.CustomAppBarState
+import com.yuventius.mvi_view_sample.ui.view.screen.login.LoginView
 import com.yuventius.mvi_view_sample.ui.view.screen.splash.SplashView
 
 @Composable
@@ -38,7 +39,7 @@ fun RootView(
         }
         navigation(route = Screen.Root.Login.ROOT, startDestination = Screen.Root.Login.route) {
             composable(Screen.Root.Login.route) {
-                Text(text = "Login")
+                LoginView(navController = navController)
                 LifecycleEventEffect(event = Lifecycle.Event.ON_CREATE) {
                     changeAppBarState(null)
                 }

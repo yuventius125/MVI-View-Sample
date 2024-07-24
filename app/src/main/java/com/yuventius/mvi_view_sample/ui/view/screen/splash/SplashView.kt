@@ -62,11 +62,11 @@ fun SplashView(
                         /**
                          * 업데이트 필요
                          */
-//                        vm.getVersion("1.0.0.1")
+//                        vm.onEvent(SplashEvent.CheckVersion(tempVersion = "0.0.0.1"))
                         /**
                          * 업데이트 필요 없음
                          */
-                        vm.getVersion()
+                        vm.onEvent(SplashEvent.CheckVersion(tempVersion = "1.0"))
                     }
                 }
                 is UiState.Loaded<SplashState> -> {

@@ -21,17 +21,25 @@ class SplashVM @Inject constructor(
     private val _uiState = MutableStateFlow<UiState<SplashState>>(UiState.Loading)
     val uiState = _uiState.asStateFlow()
 
-    fun getVersion(serverVersion: String = "1.0") {
+    fun onEvent(event: SplashEvent) {
         viewModelScope.launch {
+            when (event) {
+                is SplashEvent.CheckVersion -> getVersion(event.tempVersion)
+            }
+        }
+    }
+
+    private suspend fun getVersion(serverVersion: String?) {
+        serverVersion?.let {
             getFakeVersion(serverVersion).collect { version ->
                 _uiState.emit(
-                    UiState.Loaded(
-                        SplashState(
-                            needUpdate = BuildConfig.VERSION_NAME.toCompareVersion(version)
-                        )
-                    )
+                    UiState.Loaded(SplashState(needUpdate = BuildConfig.VERSION_NAME.toCompareVersion(version)))
                 )
             }
+        } ?: run {
+            _uiState.emit(
+                UiState.Failed
+            )
         }
     }
 

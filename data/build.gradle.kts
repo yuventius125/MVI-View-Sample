@@ -66,7 +66,6 @@ dependencies {
     implementation(libs.ktor.client.android)
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.client.logging)
-    implementation(libs.ktor.client.logging.json)
     implementation(libs.ktor.client.serialization)
 
     /**

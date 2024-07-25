@@ -19,7 +19,6 @@ hilt-androidx = "1.2.0"
 
 room = "2.6.1"
 ktor = "2.3.12"
-ktor-loggin-json = "0.1.0"
 
 logger = "2.2.0"
 
@@ -62,7 +61,6 @@ ktor-client-android = { group = "io.ktor", name = "ktor-client-android", version
 ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
 ktor-client-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
-ktor-client-logging-json = { group = "land.sungbin.ktor.client.logging", name = "ktor-client-logging-json", version.ref = "ktor-loggin-json" }
 
 logger = { group = "com.orhanobut", name = "logger", version.ref = "logger" }
 

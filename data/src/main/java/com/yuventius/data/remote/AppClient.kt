@@ -17,11 +17,7 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.URLProtocol
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonObject
-import land.sungbin.ktor.client.plugins.logging.JsonAwareLogger
-import land.sungbin.ktor.client.plugins.logging.JsonAwareLogging
 
 object AppClient {
     @OptIn(ExperimentalSerializationApi::class)

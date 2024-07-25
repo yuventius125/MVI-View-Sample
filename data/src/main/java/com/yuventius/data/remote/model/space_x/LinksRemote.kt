@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class LinksRemote(
-    val article: String
+    val article: String?
 )

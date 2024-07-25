@@ -10,6 +10,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
 import com.yuventius.mvi_view_sample.ui.theme.MVIViewSampleTheme
 import com.yuventius.mvi_view_sample.ui.view.component.CustomAppBar
 import com.yuventius.mvi_view_sample.ui.view.component.CustomAppBarState
@@ -20,6 +22,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Logger.addLogAdapter(AndroidLogAdapter())
+
         enableEdgeToEdge()
         setContent {
             MVIViewSampleTheme {

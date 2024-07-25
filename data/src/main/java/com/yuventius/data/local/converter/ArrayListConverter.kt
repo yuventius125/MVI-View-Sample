@@ -6,12 +6,12 @@ import kotlinx.serialization.json.Json
 
 class ArrayListStringConverter {
     @TypeConverter
-    fun toString(list: ArrayList<String>): String {
+    fun toString(list: ArrayList<String?>): String {
         return Json.encodeToString(list)
     }
 
     @TypeConverter
-    fun toArrayListString(value: String): ArrayList<String> {
+    fun toArrayListString(value: String): ArrayList<String?> {
         return Json.decodeFromString(value)
     }
 }

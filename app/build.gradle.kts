@@ -93,4 +93,9 @@ dependencies {
     ksp(libs.android.hilt.compiler)
     implementation(libs.android.hilt.common)
     implementation(libs.android.hilt.navigation.compose)
+
+    /**
+     * Utils
+     */
+    implementation(libs.logger)
 }

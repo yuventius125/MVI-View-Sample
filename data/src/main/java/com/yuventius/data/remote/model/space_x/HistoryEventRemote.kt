@@ -10,7 +10,7 @@ import kotlinx.serialization.Serializable
 data class HistoryEventRemote(
     val title: String,
     @SerialName("event_date_utc")
-    val eventDateUtc: LocalDateTime,
+    val eventDateUtc: String,
     @SerialName("event_date_unix")
     val eventDateUnix: Long,
     val details: String,
@@ -20,7 +20,7 @@ data class HistoryEventRemote(
 object HistoryMapperRemote: Mapper<HistoryEventRemote, HistoryEvent> {
     override fun HistoryEventRemote.toDomain(): HistoryEvent = HistoryEvent(
         title = title,
-        eventDateUtc = eventDateUtc,
+        eventDateUtc = LocalDateTime.parse(eventDateUtc),
         eventDateUnix = eventDateUnix,
         details = details,
         links = arrayListOf(links.article)
@@ -28,7 +28,7 @@ object HistoryMapperRemote: Mapper<HistoryEventRemote, HistoryEvent> {
 
     override fun HistoryEvent.toData(): HistoryEventRemote = HistoryEventRemote(
         title = title,
-        eventDateUtc = eventDateUtc,
+        eventDateUtc = eventDateUtc.toString(),
         eventDateUnix = eventDateUnix,
         details = details,
         links = LinksRemote(links[0])

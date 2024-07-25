@@ -9,5 +9,5 @@ data class HistoryEvent(
     val eventDateUtc: LocalDateTime,
     val eventDateUnix: Long,
     val details: String,
-    val links: ArrayList<String>
+    val links: ArrayList<String?>
 )

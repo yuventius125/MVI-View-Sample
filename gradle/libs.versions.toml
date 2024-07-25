@@ -5,8 +5,8 @@ coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-lifecycleRuntimeKtx = "2.8.3"
-activityCompose = "1.9.0"
+lifecycleRuntimeKtx = "2.8.4"
+activityCompose = "1.9.1"
 composeBom = "2024.06.00"
 appcompat = "1.7.0"
 material = "1.12.0"
@@ -19,6 +19,9 @@ hilt-androidx = "1.2.0"
 
 room = "2.6.1"
 ktor = "2.3.12"
+ktor-loggin-json = "0.1.0"
+
+logger = "2.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -59,6 +62,9 @@ ktor-client-android = { group = "io.ktor", name = "ktor-client-android", version
 ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
 ktor-client-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-logging-json = { group = "land.sungbin.ktor.client.logging", name = "ktor-client-logging-json", version.ref = "ktor-loggin-json" }
+
+logger = { group = "com.orhanobut", name = "logger", version.ref = "logger" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

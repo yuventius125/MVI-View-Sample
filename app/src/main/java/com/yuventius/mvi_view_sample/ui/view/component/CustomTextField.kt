@@ -1,6 +1,7 @@
 package com.yuventius.mvi_view_sample.ui.view.component
 
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Icon
@@ -13,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -28,8 +30,16 @@ fun CustomTextField(
     leadingIcon: Painter? = null,
     trailingIcon: Painter? = null,
     onTrailingIconClick: (() -> Unit)? = null,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    imeAction: ImeAction? = null,
+    onAction: (() -> Unit)? = null
 ) {
     val iconSize = 18.dp
+
+    val isPassword = keyboardType == KeyboardType.Password
+    val passwordShown = remember {
+        mutableStateOf(false)
+    }
 
     OutlinedTextField(
         modifier = modifier,
@@ -46,16 +56,39 @@ fun CustomTextField(
             }
         },
         trailingIcon = {
-            trailingIcon?.let {
-                IconButton(onClick = { onTrailingIconClick?.invoke() }) {
+            if (isPassword) {
+
+                IconButton(onClick = { passwordShown.value = !passwordShown.value }) {
                     Icon(
                         modifier = Modifier.size(iconSize),
-                        painter = trailingIcon,
+                        painter = if (passwordShown.value)
+                            painterResource(id = R.drawable.ic_visibility)
+                        else
+                            painterResource(id = R.drawable.ic_visibility_off),
                         contentDescription = null
                     )
                 }
+            } else {
+                trailingIcon?.let {
+                    IconButton(onClick = { onTrailingIconClick?.invoke() }) {
+                        Icon(
+                            modifier = Modifier.size(iconSize),
+                            painter = trailingIcon,
+                            contentDescription = null
+                        )
+                    }
+                }
             }
-        }
+        },
+        keyboardOptions = KeyboardOptions(
+            keyboardType = keyboardType,
+            imeAction = imeAction ?: ImeAction.Done
+        ),
+        keyboardActions = onAction?.let {
+            KeyboardActions(onDone = { it.invoke() })
+        } ?: run { KeyboardActions.Default },
+        singleLine = true,
+        visualTransformation = if (isPassword && passwordShown.value.not()) PasswordVisualTransformation() else VisualTransformation.None
     )
 }
 
@@ -67,7 +100,9 @@ fun CustomTextField(
     leadingIcon: ImageVector? = null,
     trailingIcon: ImageVector? = null,
     onTrailingIconClick: (() -> Unit)? = null,
-    keyboardType: KeyboardType = KeyboardType.Text
+    keyboardType: KeyboardType = KeyboardType.Text,
+    imeAction: ImeAction? = null,
+    onAction: (() -> Unit)? = null
 ) {
     val iconSize = 18.dp
 
@@ -115,8 +150,14 @@ fun CustomTextField(
                 }
             }
         },
-        keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = keyboardType,
+            imeAction = imeAction ?: ImeAction.Done
+        ),
+        keyboardActions = onAction?.let {
+            KeyboardActions(onDone = { it.invoke() })
+        } ?: run { KeyboardActions.Default },
         singleLine = true,
-        visualTransformation = if (isPassword && passwordShown.value.not()) PasswordVisualTransformation() else VisualTransformation.None
+        visualTransformation = if (isPassword && passwordShown.value.not()) PasswordVisualTransformation() else VisualTransformation.None,
     )
 }

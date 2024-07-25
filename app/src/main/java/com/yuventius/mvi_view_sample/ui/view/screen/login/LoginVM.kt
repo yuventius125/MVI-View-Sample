@@ -43,7 +43,7 @@ class LoginVM @Inject constructor(
 
     private suspend fun login() {
         (_uiState.value as? UiState.Loaded<LoginState>)?.data?.let {
-            _uiState.emit(UiState.Loaded(it.copy(loginPending = true, loginFailed = false)))
+            _uiState.emit(UiState.Loaded(it.copy(loginPending = true, loginFailed = false, loginSucceed = false)))
             checkLogin(it.email, it.password).collect { result ->
                 if (result) {
                     _uiState.emit(UiState.Loaded(it.copy(loginPending = false, loginFailed = false, loginSucceed = true)))

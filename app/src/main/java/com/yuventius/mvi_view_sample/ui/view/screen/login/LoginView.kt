@@ -20,6 +20,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
@@ -38,6 +40,7 @@ fun LoginView(
     val context = LocalContext.current
     val uiState = vm.uiState.collectAsState()
     val scope = rememberCoroutineScope()
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Box(
         modifier = Modifier
@@ -71,7 +74,8 @@ fun LoginView(
                         value = data.email,
                         onValueChange = { vm.onEvent(LoginEvent.SetEmail(it)) },
                         leadingIcon = Icons.Default.Email,
-                        keyboardType = KeyboardType.Email
+                        keyboardType = KeyboardType.Email,
+                        imeAction = ImeAction.Next
                     )
                     CustomTextField(
                         modifier = Modifier
@@ -81,7 +85,11 @@ fun LoginView(
                         value = data.password,
                         onValueChange = { vm.onEvent(LoginEvent.SetPassword(it)) },
                         leadingIcon = Icons.Default.Lock,
-                        keyboardType = KeyboardType.Password
+                        keyboardType = KeyboardType.Password,
+                        onAction = {
+                            keyboardController?.hide()
+                            vm.onEvent(LoginEvent.Login)
+                        }
                     )
                     Button(
                         modifier = Modifier
@@ -93,7 +101,8 @@ fun LoginView(
                     ) {
                         if (data.loginPending) {
                             CircularProgressIndicator(
-                                modifier = Modifier.size(12.dp)
+                                modifier = Modifier.size(12.dp),
+                                strokeWidth = 2.dp
                             )
                         } else {
                             Text(

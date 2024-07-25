@@ -16,7 +16,7 @@ data class HistoryEventLocal(
     val eventDateUtc: LocalDateTime,
     val eventDateUnix: Long,
     val details: String,
-    val links: ArrayList<String>
+    val links: ArrayList<String?>
 )
 
 object HistoryEventMapper: Mapper<HistoryEventLocal, HistoryEvent> {

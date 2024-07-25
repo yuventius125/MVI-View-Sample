@@ -9,5 +9,5 @@ abstract class BaseConverter<T> {
     @TypeConverter
     open fun fromString(value: String?): T? = value?.let { objectFromString(it) } ?: run { null }
 
-    abstract fun objectFromString(value: String): T?
+    abstract fun objectFromString(value: String?): T?
 }

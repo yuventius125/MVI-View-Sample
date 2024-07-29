@@ -29,7 +29,7 @@ class HistoryEventReposLocal @Inject constructor(
     }
     override suspend fun deleteHistoryEvent(historyEvent: HistoryEvent): DataResult<Boolean> {
         try {
-            historyEventDao.deleteHistoryEvent(historyEvent.toData())
+            historyEventDao.deleteHistoryEvent(historyEvent.toData().id)
             return DataResult.Success(true)
         } catch (e: Exception) {
             return DataResult.Error(e)

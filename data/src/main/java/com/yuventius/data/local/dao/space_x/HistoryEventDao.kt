@@ -19,7 +19,10 @@ interface HistoryEventDao {
     @Throws(Exception::class)
     suspend fun insertHistoryEvent(historyEvent: HistoryEventLocal)
 
-    @Delete
+    @Query("""
+        DELETE FROM history_event
+        WHERE id = :id
+    """)
     @Throws(Exception::class)
-    suspend fun deleteHistoryEvent(historyEvent: HistoryEventLocal)
+    suspend fun deleteHistoryEvent(id: String)
 }

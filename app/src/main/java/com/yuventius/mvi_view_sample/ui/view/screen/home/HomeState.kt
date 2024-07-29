@@ -9,6 +9,7 @@ import kotlinx.serialization.json.Json
 @Serializable
 data class HomeState (
     val remoteHistories: List<HistoryEvent> = emptyList(),
+    val localHistories: List<HistoryEvent> = emptyList(),
 ): Copyable<HomeState> {
     override fun copy(): HomeState = Json.decodeFromString(Json.encodeToString(this))
 }

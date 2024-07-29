@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -78,7 +79,7 @@ fun SpaceXHistoryItemView(
                         .clickable {
                             onFavoriteClick(historyItem.id, isFavoriteEnabled.not())
                         },
-                    imageVector = Icons.Default.FavoriteBorder,
+                    imageVector = if (isFavoriteEnabled) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                     contentDescription = ""
                 )
             }

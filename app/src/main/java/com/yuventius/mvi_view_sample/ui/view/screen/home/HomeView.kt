@@ -49,9 +49,6 @@ fun HomeView (
                     modifier = Modifier
                         .align(Alignment.Center)
                 )
-                LifecycleEventEffect(event = Lifecycle.Event.ON_CREATE) {
-                    vm.onEvent(HomeEvent.GetRemoteHistories)
-                }
             }
             is UiState.Loaded -> {
                 val data = (uiState.value as UiState.Loaded).data
@@ -66,8 +63,13 @@ fun HomeView (
                             modifier = Modifier,
                             color = Color.White,
                             historyItem = item,
+                            isFavoriteEnabled = data.localHistories.contains(item),
                             onFavoriteClick = { id, isOn ->
-
+                                if (isOn) {
+                                    vm.onEvent(HomeEvent.InsertFavorite(item))
+                                } else {
+                                    vm.onEvent(HomeEvent.DeleteFavorite(item))
+                                }
                             },
                             onClick = { id ->
 
@@ -77,5 +79,9 @@ fun HomeView (
                 }
             }
         }
+    }
+
+    LifecycleEventEffect(event = Lifecycle.Event.ON_CREATE) {
+        vm.onEvent(HomeEvent.GetRemoteHistories)
     }
 }

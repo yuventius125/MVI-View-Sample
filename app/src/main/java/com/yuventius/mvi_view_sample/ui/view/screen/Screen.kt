@@ -11,8 +11,13 @@ sealed class Screen(val route: String) {
         data object Home: Screen("home") {
             const val ROOT: String = "HomeRoot"
         }
+        data object QR: Screen("qr") {
+            const val ROOT: String = "QRRoot"
+        }
     }
     sealed class Route {
         data object HistoryDetail: Screen("history_detail")
+        data object QRImage: Screen("qr_image/{qrString}")
+        data object QRCamera: Screen("qr_camera")
     }
 }

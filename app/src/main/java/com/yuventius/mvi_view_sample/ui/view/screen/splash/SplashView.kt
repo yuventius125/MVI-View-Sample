@@ -89,7 +89,8 @@ fun SplashView(
                         LifecycleEventEffect(event = Lifecycle.Event.ON_CREATE) {
                             scope.launch {
                                 delay(2000L)
-                                navController.root(Screen.Root.Login)
+//                                navController.root(Screen.Root.Login)
+                                navController.root(Screen.Root.QR)
                             }
                         }
                     }

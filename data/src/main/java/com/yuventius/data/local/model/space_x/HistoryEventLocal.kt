@@ -11,9 +11,10 @@ import kotlinx.serialization.Serializable
 @Entity(tableName = "history_event")
 data class HistoryEventLocal(
     @PrimaryKey
-    val id: Int? = null,
+    val idx: Int? = null,
+    val id: String,
     val title: String,
-    val eventDateUtc: LocalDateTime,
+    val eventDateUtc: String,
     val eventDateUnix: Long,
     val details: String,
     val links: ArrayList<String?>
@@ -21,6 +22,7 @@ data class HistoryEventLocal(
 
 object HistoryEventMapper: Mapper<HistoryEventLocal, HistoryEvent> {
     override fun HistoryEventLocal.toDomain(): HistoryEvent = HistoryEvent(
+        id = id,
         title = title,
         eventDateUtc = eventDateUtc,
         eventDateUnix = eventDateUnix,
@@ -29,6 +31,7 @@ object HistoryEventMapper: Mapper<HistoryEventLocal, HistoryEvent> {
     )
 
     override fun HistoryEvent.toData(): HistoryEventLocal = HistoryEventLocal(
+        id = id,
         title = title,
         eventDateUtc = eventDateUtc,
         eventDateUnix = eventDateUnix,

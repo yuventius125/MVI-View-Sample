@@ -16,6 +16,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url = uri("https://jitpack.io") }
     }
 }
 
@@ -23,3 +24,4 @@ rootProject.name = "MVI-View-Sample"
 include(":app")
 include(":domain")
 include(":data")
+include(":QR-Generator")

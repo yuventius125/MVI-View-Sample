@@ -7,6 +7,14 @@ fun NavController.route(to: Screen) {
     navigate(to.route)
 }
 
+fun NavController.route(to: Screen, args: Map<String, String>) {
+    var route = to.route
+    for ((key, value) in args) {
+        route = route.replace("{$key}", value)
+    }
+    navigate(route)
+}
+
 fun NavController.root(to: Screen) {
     popBackStack()
     graph.setStartDestination(to.route)

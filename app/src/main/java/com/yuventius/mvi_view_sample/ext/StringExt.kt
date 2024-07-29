@@ -1,5 +1,10 @@
 package com.yuventius.mvi_view_sample.ext
 
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.util.Locale
+
 /**
  * 버전 체크
  * @param serverVersion 서버 버전
@@ -19,4 +24,14 @@ fun String.toCompareVersion(serverVersion: String): Boolean {
     }
 
     return serverVersionArr.size > appVersionArr.size
+}
+
+/**
+ * UTC 기반 String 변환
+ * @return [LocalDateTime] 날짜 데이터 / 변환 불가 시 null
+ */
+fun String.toLocalDateTimeByUTC(): LocalDateTime? {
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+    val date = dateFormat.parse(this)
+    return date?.toInstant()?.atZone(ZoneId.systemDefault())?.toLocalDateTime()
 }

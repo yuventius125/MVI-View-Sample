@@ -22,6 +22,11 @@ ktor = "2.3.12"
 
 logger = "2.2.0"
 
+qr-generator = "2.0.0-alpha01"
+googleAccompanist = "0.35.1-alpha"
+zxing-core = "3.4.0"
+zxing-android = "4.1.0"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -63,6 +68,13 @@ ktor-client-logging = { group = "io.ktor", name = "ktor-client-logging", version
 ktor-client-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
 
 logger = { group = "com.orhanobut", name = "logger", version.ref = "logger" }
+
+qr-generator = { group = "com.github.alexzhirkevich", name = "custom-qr-generator", version.ref = "qr-generator" }
+drawable-painter = { group = "com.google.accompanist", name = "accompanist-drawablepainter", version.ref = "googleAccompanist" }
+permission = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "googleAccompanist" }
+
+zxing-core = { group = "com.journeyapps", name = "zxing-android-embedded", version.ref = "zxing-android" }
+zxing-android = { group = "com.google.zxing", name = "core", version.ref = "zxing-core" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

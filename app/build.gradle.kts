@@ -75,6 +75,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(project(":domain"))
     implementation(project(":data"))
+    implementation(project(":QR-Generator"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -98,4 +99,8 @@ dependencies {
      * Utils
      */
     implementation(libs.logger)
+    implementation(libs.drawable.painter)
+    implementation(libs.permission)
+    implementation(libs.zxing.core)
+    implementation(libs.zxing.android)
 }

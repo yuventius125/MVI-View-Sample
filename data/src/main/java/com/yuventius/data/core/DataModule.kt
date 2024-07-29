@@ -3,6 +3,7 @@ package com.yuventius.data.core
 import android.content.Context
 import androidx.room.Room
 import com.yuventius.data.local.AppDatabase
+import com.yuventius.data.local.MIGRATION_1_TO_2
 import com.yuventius.data.local.repos.HistoryEventReposLocal
 import com.yuventius.data.remote.AppClient
 import com.yuventius.data.remote.repos.space_x.HistoryEventReposRemote
@@ -37,7 +38,10 @@ class DataProvideModule {
 
     @Provides
     @Singleton
-    fun provideAppDatabase(@ApplicationContext context: Context) = Room.databaseBuilder(context, AppDatabase::class.java, "app_database.db").build()
+    fun provideAppDatabase(@ApplicationContext context: Context) = Room
+        .databaseBuilder(context, AppDatabase::class.java, "app_database.db")
+        .addMigrations(MIGRATION_1_TO_2)
+        .build()
 
     @Provides
     @Singleton

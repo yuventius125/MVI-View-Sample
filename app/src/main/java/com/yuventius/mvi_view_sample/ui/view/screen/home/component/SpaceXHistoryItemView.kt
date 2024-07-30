@@ -1,5 +1,8 @@
 package com.yuventius.mvi_view_sample.ui.view.screen.home.component
 
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -32,10 +35,13 @@ import com.yuventius.domain.model.HistoryEvent
 import com.yuventius.mvi_view_sample.ext.toFormattedString
 import com.yuventius.mvi_view_sample.ext.toLocalDateTimeByUTC
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun SpaceXHistoryItemView(
     modifier: Modifier = Modifier,
     historyItem: HistoryEvent,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
     elevation: Dp = 1.dp,
     color: Color = MaterialTheme.colorScheme.surfaceVariant,
     isFavoriteEnabled: Boolean = false,
@@ -54,53 +60,75 @@ fun SpaceXHistoryItemView(
             defaultElevation = elevation
         )
     ) {
-        Column(
-            modifier = Modifier
-                .padding(12.dp)
-        ) {
-            Row(
+        with(sharedTransitionScope) {
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+                    .padding(12.dp)
             ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        modifier = Modifier
+                            .sharedElement(
+                                sharedTransitionScope.rememberSharedContentState(
+                                    key = "title_${historyItem.id}"
+                                ),
+                                animatedVisibilityScope = animatedContentScope
+                            )
+                            .weight(1f)
+                            .padding(PaddingValues(end = 12.dp, top = 12.dp, bottom = 12.dp)),
+                        text = historyItem.title,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Icon(
+                        modifier = Modifier
+                            .sharedElement(
+                                sharedTransitionScope.rememberSharedContentState(key = "favorite_${historyItem.id}"),
+                                animatedVisibilityScope = animatedContentScope
+                            )
+                            .size(20.dp)
+                            .clickable {
+                                onFavoriteClick(historyItem.id, isFavoriteEnabled.not())
+                            },
+                        imageVector = if (isFavoriteEnabled) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                        contentDescription = ""
+                    )
+                }
                 Text(
                     modifier = Modifier
-                        .weight(1f)
-                        .padding(PaddingValues(end = 12.dp, top = 12.dp, bottom = 12.dp)),
-                    text = historyItem.title,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp,
-                    maxLines = 1,
+                        .sharedElement(
+                            sharedTransitionScope.rememberSharedContentState(key = "details_${historyItem.id}"),
+                            animatedVisibilityScope = animatedContentScope
+                        ),
+                    text = historyItem.details,
+                    maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
-                Icon(
+                Row(
                     modifier = Modifier
-                        .size(20.dp)
-                        .clickable {
-                            onFavoriteClick(historyItem.id, isFavoriteEnabled.not())
-                        },
-                    imageVector = if (isFavoriteEnabled) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                    contentDescription = ""
-                )
-            }
-            Text(
-                text = historyItem.details,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis
-            )
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Spacer(modifier = Modifier.weight(1F))
-                Text(
-                    text = historyItem.eventDateUtc.toLocalDateTimeByUTC()?.toFormattedString() ?: "",
-                    fontSize = 8.sp,
-                    fontWeight = FontWeight.Light,
-                    color = Color.Gray
-                )
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Spacer(modifier = Modifier.weight(1F))
+                    Text(
+                        modifier = Modifier
+                            .sharedElement(
+                                sharedTransitionScope.rememberSharedContentState(key = "date_${historyItem.id}"),
+                                animatedVisibilityScope = animatedContentScope
+                            ),
+                        text = historyItem.eventDateUtc.toLocalDateTimeByUTC()?.toFormattedString() ?: "",
+                        fontSize = 8.sp,
+                        fontWeight = FontWeight.Light,
+                        color = Color.Gray
+                    )
 
+                }
             }
         }
     }

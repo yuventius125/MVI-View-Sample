@@ -1,5 +1,8 @@
 package com.yuventius.mvi_view_sample.ui.view.screen.home
 
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -21,13 +24,20 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.navigation.NavController
+import com.yuventius.mvi_view_sample.ext.route
 import com.yuventius.mvi_view_sample.ui.view.base.UiState
+import com.yuventius.mvi_view_sample.ui.view.screen.Screen
 import com.yuventius.mvi_view_sample.ui.view.screen.home.component.SpaceXHistoryItemView
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun HomeView (
     navController: NavController,
-    vm: HomeVM = hiltViewModel()
+    vm: HomeVM = hiltViewModel(),
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope
 ) {
     val context = LocalContext.current
     val uiState = vm.uiState.collectAsState()
@@ -72,8 +82,10 @@ fun HomeView (
                                 }
                             },
                             onClick = { id ->
-
-                            }
+                                navController.route(Screen.Route.HistoryDetail, mapOf(Pair("historyItem", Json.encodeToString(item))))
+                            },
+                            sharedTransitionScope = sharedTransitionScope,
+                            animatedContentScope = animatedContentScope
                         )
                     }
                 }

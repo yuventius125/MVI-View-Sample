@@ -24,8 +24,9 @@ logger = "2.2.0"
 
 qr-generator = "2.0.0-alpha01"
 googleAccompanist = "0.35.1-alpha"
-zxing-core = "3.4.0"
+zxing-core = "3.5.1"
 zxing-android = "4.1.0"
+composeAnimation = "1.7.0-beta06"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -44,6 +45,8 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+androidx-compose-animation = { group = "androidx.compose.animation", name = "animation", version.ref = "composeAnimation" }
+androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "composeAnimation" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-datetime" }
@@ -72,6 +75,7 @@ logger = { group = "com.orhanobut", name = "logger", version.ref = "logger" }
 qr-generator = { group = "com.github.alexzhirkevich", name = "custom-qr-generator", version.ref = "qr-generator" }
 drawable-painter = { group = "com.google.accompanist", name = "accompanist-drawablepainter", version.ref = "googleAccompanist" }
 permission = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "googleAccompanist" }
+navigation-animation = { group = "com.google.accompanist", name = "accompanist-navigation-animation", version.ref = "googleAccompanist" }
 
 zxing-core = { group = "com.journeyapps", name = "zxing-android-embedded", version.ref = "zxing-android" }
 zxing-android = { group = "com.google.zxing", name = "core", version.ref = "zxing-core" }

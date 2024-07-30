@@ -86,6 +86,8 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.datetime)
     implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.compose.animation)
+    implementation(libs.androidx.compose.foundation)
 
     /**
      * DI
@@ -101,6 +103,7 @@ dependencies {
     implementation(libs.logger)
     implementation(libs.drawable.painter)
     implementation(libs.permission)
+    implementation(libs.navigation.animation)
     implementation(libs.zxing.core)
     implementation(libs.zxing.android)
 }

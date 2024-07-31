@@ -37,7 +37,8 @@ fun HomeView (
     navController: NavController,
     vm: HomeVM = hiltViewModel(),
     sharedTransitionScope: SharedTransitionScope,
-    animatedContentScope: AnimatedContentScope
+    animatedContentScope: AnimatedContentScope,
+    onCreate: () -> Unit = {}
 ) {
     val context = LocalContext.current
     val uiState = vm.uiState.collectAsState()
@@ -94,6 +95,7 @@ fun HomeView (
     }
 
     LifecycleEventEffect(event = Lifecycle.Event.ON_CREATE) {
+        onCreate.invoke()
         vm.onEvent(HomeEvent.GetRemoteHistories)
     }
 }

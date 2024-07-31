@@ -1,9 +1,12 @@
+import com.google.protobuf.gradle.id
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.android.hilt)
+    alias(libs.plugins.protobuf)
 }
 
 android {
@@ -32,6 +35,21 @@ android {
     }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.majorVersion
+    }
+
+    protobuf {
+        protoc {
+            artifact = "com.google.protobuf:protoc:3.24.1"
+        }
+        generateProtoTasks {
+            all().forEach { task ->
+                task.builtins {
+                    id("java") {
+                        option("lite")
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -67,6 +85,13 @@ dependencies {
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.client.logging)
     implementation(libs.ktor.client.serialization)
+
+    /**
+     * Pref
+     */
+    implementation(libs.datastore.core)
+    implementation(libs.datastore)
+    implementation(libs.protobuf.jvm)
 
     /**
      * Utils

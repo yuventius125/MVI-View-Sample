@@ -4,6 +4,7 @@ import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.Lifecycle
@@ -33,6 +34,7 @@ fun RootView(
 ) {
     SharedTransitionLayout (
         modifier = modifier
+            .fillMaxSize()
     ) {
         NavHost(
             modifier = modifier,
@@ -73,8 +75,7 @@ fun RootView(
                         navController = navController,
                         sharedTransitionScope = this@SharedTransitionLayout,
                         animatedContentScope = this@composable
-                    )
-                    LifecycleEventEffect(event = Lifecycle.Event.ON_CREATE) {
+                    ) {
                         changeAppBarState(null)
                     }
                 }
@@ -100,8 +101,7 @@ fun RootView(
             }
             navigation(route = Screen.Root.QR.ROOT, startDestination = Screen.Root.QR.route) {
                 composable(Screen.Root.QR.route) {
-                    QRView(navController = navController)
-                    LifecycleEventEffect(event = Lifecycle.Event.ON_CREATE) {
+                    QRView(navController = navController) {
                         changeAppBarState(null)
                     }
                 }
@@ -114,14 +114,12 @@ fun RootView(
                         }
                     )
                 ) {
-                    QRImageView(navController = navController, qrString = it.arguments?.getString("qrString") ?: "")
-                    LifecycleEventEffect(event = Lifecycle.Event.ON_CREATE) {
+                    QRImageView(navController = navController, qrString = it.arguments?.getString("qrString") ?: "") {
                         changeAppBarState(CustomAppBarState(title = "QRImage", onBack = { navController.navigateUp() }, onAction = {}))
                     }
                 }
                 composable(Screen.Route.QRCamera.route) {
-                    QRCameraView(navController = navController)
-                    LifecycleEventEffect(event = Lifecycle.Event.ON_CREATE) {
+                    QRCameraView(navController = navController) {
                         changeAppBarState(CustomAppBarState(title = "QRCamera", onBack = { navController.navigateUp() }, onAction = {}))
                     }
                 }

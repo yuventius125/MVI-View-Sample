@@ -26,7 +26,8 @@ import com.yuventius.mvi_view_sample.ui.view.base.UiState
 fun QRImageView(
     navController: NavController,
     qrString: String,
-    vm: QRImageVM = hiltViewModel()
+    vm: QRImageVM = hiltViewModel(),
+    onCreate: () -> Unit = {}
 ) {
     val context = LocalContext.current
     val state = vm.state.collectAsState()
@@ -62,6 +63,7 @@ fun QRImageView(
         }
 
         LifecycleEventEffect(event = Lifecycle.Event.ON_CREATE) {
+            onCreate.invoke()
             vm.onEvent(QRImageEvent.GenerateQRImage(qrString))
         }
     }

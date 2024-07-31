@@ -38,7 +38,8 @@ import com.yuventius.qr_generator.core.decrypt
 @Composable
 fun QRCameraView(
     navController: NavController,
-    vm: QRCameraVM = hiltViewModel()
+    vm: QRCameraVM = hiltViewModel(),
+    onCreate: () -> Unit = {}
 ) {
     val context = LocalContext.current
     val state = vm.uiState.collectAsState()
@@ -106,5 +107,9 @@ fun QRCameraView(
         if (permissionState.status is PermissionStatus.Granted) {
             vm.onEvent(QRCameraEvent.InitializeCamera)
         }
+    }
+
+    LifecycleEventEffect(event = Lifecycle.Event.ON_CREATE) {
+        onCreate.invoke()
     }
 }

@@ -27,6 +27,8 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.navigation.NavController
 import com.yuventius.mvi_view_sample.ext.route
 import com.yuventius.mvi_view_sample.ui.view.base.UiState
@@ -36,7 +38,8 @@ import com.yuventius.mvi_view_sample.ui.view.screen.Screen
 @Composable
 fun QRView(
     navController: NavController,
-    vm: QRVM = hiltViewModel()
+    vm: QRVM = hiltViewModel(),
+    onCreate: () -> Unit = {}
 ) {
     val context = LocalContext.current
     val state = vm.state.collectAsState()
@@ -123,5 +126,9 @@ fun QRView(
             }
             else -> {}
         }
+    }
+
+    LifecycleEventEffect(event = Lifecycle.Event.ON_CREATE) {
+        onCreate.invoke()
     }
 }

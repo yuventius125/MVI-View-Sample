@@ -7,4 +7,5 @@ plugins {
     alias(libs.plugins.serialization) apply false
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.android.hilt) apply false
+    alias(libs.plugins.protobuf) apply false
 }

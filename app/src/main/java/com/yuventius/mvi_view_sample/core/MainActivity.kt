@@ -42,7 +42,9 @@ class MainActivity : ComponentActivity() {
                     }
                 ) { innerPadding ->
                     RootView(
-                        modifier = Modifier.padding(innerPadding),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding),
                         navController = navController,
                         changeAppBarState = {
                             customAppBarState = it

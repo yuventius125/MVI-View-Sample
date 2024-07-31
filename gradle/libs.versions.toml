@@ -19,6 +19,7 @@ hilt-androidx = "1.2.0"
 
 room = "2.6.1"
 ktor = "2.3.12"
+datastore = "1.1.1"
 
 logger = "2.2.0"
 
@@ -27,6 +28,9 @@ googleAccompanist = "0.35.1-alpha"
 zxing-core = "3.5.1"
 zxing-android = "4.1.0"
 composeAnimation = "1.7.0-beta06"
+
+protobuf-plugin = "0.9.4"
+protobuf-java-lite = "3.21.11"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -69,6 +73,10 @@ ktor-client-android = { group = "io.ktor", name = "ktor-client-android", version
 ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
 ktor-client-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+## Datastore
+protobuf-jvm = { group = "com.google.protobuf", name = "protobuf-javalite", version.ref = "protobuf-java-lite" }
+datastore = { group = "androidx.datastore", name = "datastore", version.ref = "datastore" }
+datastore-core = { group = "androidx.datastore", name = "datastore-core", version.ref = "datastore" }
 
 logger = { group = "com.orhanobut", name = "logger", version.ref = "logger" }
 
@@ -87,6 +95,7 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+protobuf = { id = "com.google.protobuf", version.ref = "protobuf-plugin"}
 
 # DI
 ## dagger-hilt

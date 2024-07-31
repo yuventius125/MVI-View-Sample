@@ -1,7 +1,9 @@
 package com.yuventius.domain.core
 
 import com.yuventius.domain.repos.local.IHistoryEventReposLocal
+import com.yuventius.domain.repos.pref.IPrefRepos
 import com.yuventius.domain.repos.remote.IHistoryEventReposRemote
+import com.yuventius.domain.use_case.PrefUseCase
 import com.yuventius.domain.use_case.SpaceXUseCase
 import dagger.Module
 import dagger.Provides
@@ -18,4 +20,10 @@ object UseCaseModule {
         historyEventRemote: IHistoryEventReposRemote,
         historyEventLocal: IHistoryEventReposLocal
     ) = SpaceXUseCase(historyEventRemote, historyEventLocal)
+
+    @Provides
+    @Singleton
+    fun providePrefUseCase(
+        prefRepos: IPrefRepos
+    ) = PrefUseCase(prefRepos)
 }

@@ -110,6 +110,25 @@ fun LoginView(
                             )
                         }
                     }
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(12.dp),
+                        shape = RoundedCornerShape(12.dp),
+                        onClick = { vm.onEvent(LoginEvent.LogOut) },
+                        enabled = data.loginPending.not()
+                    ) {
+                        if (data.loginPending) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(12.dp),
+                                strokeWidth = 2.dp
+                            )
+                        } else {
+                            Text(
+                                text = "로그아웃"
+                            )
+                        }
+                    }
                 }
 
                 LaunchedEffect(key1 = data.loginSucceed) {

@@ -1,5 +1,10 @@
 package com.yuventius.mvi_view_sample.ext
 
+import android.content.Context
+import android.media.MediaMetadataRetriever
+import android.net.Uri
+import android.util.Log
+import java.io.File
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -34,4 +39,14 @@ fun String.toLocalDateTimeByUTC(): LocalDateTime? {
     val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
     val date = dateFormat.parse(this)
     return date?.toInstant()?.atZone(ZoneId.systemDefault())?.toLocalDateTime()
+}
+
+fun String.getMediaFileDuration(context: Context): Long {
+    val file = File(context.filesDir, this)
+    val retriever = MediaMetadataRetriever()
+    retriever.setDataSource("file://${file.absolutePath}")
+    val millisStr = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+    val millis = millisStr?.toLongOrNull() ?: 0L
+    retriever.release()
+    return millis
 }

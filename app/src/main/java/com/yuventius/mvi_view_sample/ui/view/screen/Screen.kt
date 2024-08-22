@@ -14,6 +14,9 @@ sealed class Screen(val route: String) {
         data object QR: Screen("qr") {
             const val ROOT: String = "QRRoot"
         }
+        data object Record: Screen("record") {
+            const val ROOT: String = "RecordRoot"
+        }
     }
     sealed class Route {
         data object HistoryDetail: Screen("history_detail?historyItem={historyItem}")

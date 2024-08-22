@@ -4,5 +4,5 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 fun LocalDateTime?.toFormattedString(): String? {
-    return this?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+    return this?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss"))
 }

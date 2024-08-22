@@ -15,10 +15,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
+import androidx.navigation.navigation
 import com.yuventius.mvi_view_sample.ui.view.component.CustomAppBarState
 import com.yuventius.mvi_view_sample.ui.view.screen.home.HomeView
 import com.yuventius.mvi_view_sample.ui.view.screen.home.detail.HomeDetailView
 import com.yuventius.mvi_view_sample.ui.view.screen.login.LoginView
+import com.yuventius.mvi_view_sample.ui.view.screen.media.MediaView
 import com.yuventius.mvi_view_sample.ui.view.screen.qr.QRView
 import com.yuventius.mvi_view_sample.ui.view.screen.qr.camera.QRCameraView
 import com.yuventius.mvi_view_sample.ui.view.screen.qr.image.QRImageView
@@ -122,6 +124,13 @@ fun RootView(
                     QRCameraView(navController = navController) {
                         changeAppBarState(CustomAppBarState(title = "QRCamera", onBack = { navController.navigateUp() }, onAction = {}))
                     }
+                }
+            }
+            navigation(route = Screen.Root.Record.ROOT, startDestination = Screen.Root.Record.route) {
+                composable(
+                    Screen.Root.Record.route
+                ) {
+                    MediaView(navController = navController)
                 }
             }
         }

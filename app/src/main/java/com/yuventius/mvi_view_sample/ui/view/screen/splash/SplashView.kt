@@ -21,6 +21,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.navigation.NavController
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import com.google.accompanist.permissions.rememberPermissionState
+import com.lukus.media_extension.MediaUtil
 import com.yuventius.mvi_view_sample.BuildConfig
 import com.yuventius.mvi_view_sample.ext.root
 import com.yuventius.mvi_view_sample.ext.url
@@ -29,6 +33,7 @@ import com.yuventius.mvi_view_sample.ui.view.screen.Screen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun SplashView(
     navController: NavController,
@@ -37,6 +42,8 @@ fun SplashView(
     val context = LocalContext.current
     val uiState = vm.uiState.collectAsState()
     val scope = rememberCoroutineScope()
+
+    val permissionState = rememberMultiplePermissionsState(permissions = MediaUtil.permissions)
 
     Box(
         modifier = Modifier
@@ -59,6 +66,12 @@ fun SplashView(
                     CircularProgressIndicator()
 
                     LifecycleEventEffect(event = Lifecycle.Event.ON_CREATE) {
+                        if (permissionState.allPermissionsGranted.not()) {
+                            permissionState.launchMultiplePermissionRequest()
+                        } else {
+                            vm.onEvent(SplashEvent.CheckVersion(tempVersion = "1.0"))
+                        }
+
                         /**
                          * 업데이트 필요
                          */
@@ -66,6 +79,10 @@ fun SplashView(
                         /**
                          * 업데이트 필요 없음
                          */
+//                        vm.onEvent(SplashEvent.CheckVersion(tempVersion = "1.0"))
+                    }
+
+                    if (permissionState.allPermissionsGranted) {
                         vm.onEvent(SplashEvent.CheckVersion(tempVersion = "1.0"))
                     }
                 }
@@ -89,8 +106,9 @@ fun SplashView(
                         LifecycleEventEffect(event = Lifecycle.Event.ON_CREATE) {
                             scope.launch {
                                 delay(2000L)
-                                navController.root(Screen.Root.Login)
+//                                navController.root(Screen.Root.Login)
 //                                navController.root(Screen.Root.QR)
+                                navController.root(Screen.Root.Record)
                             }
                         }
                     }

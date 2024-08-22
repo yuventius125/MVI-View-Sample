@@ -6,7 +6,7 @@ import com.orhanobut.logger.Logger
 import com.yuventius.domain.model.DataResult
 import com.yuventius.domain.model.HistoryEvent
 import com.yuventius.domain.use_case.SpaceXUseCase
-import com.yuventius.mvi_view_sample.ui.view.base.UiState
+import com.yuventius.mvi_view_sample.ui.view.base.UIState
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -14,14 +14,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel(assistedFactory = HomeDetailVM.HomeDetailVMFactory::class)
 class HomeDetailVM @AssistedInject constructor(
     @Assisted private val historyEvent: HistoryEvent,
     private val spaceXUseCase: SpaceXUseCase
 ): ViewModel() {
-    private val _uiState = MutableStateFlow<UiState<HomeDetailState>>(UiState.Loaded(HomeDetailState(historyEvent)))
+    private val _uiState = MutableStateFlow<UIState<HomeDetailState>>(UIState.Success(HomeDetailState(historyEvent)))
     val uiState = _uiState.asStateFlow()
 
     fun onEvent(event: HomeDetailEvent) {
@@ -41,11 +40,11 @@ class HomeDetailVM @AssistedInject constructor(
     }
 
     private suspend fun getFavorites() {
-        if (_uiState.value is UiState.Loaded) {
-            val data = (_uiState.value as UiState.Loaded).data
+        if (_uiState.value is UIState.Success) {
+            val data = (_uiState.value as UIState.Success).data
             when (val result = spaceXUseCase.getHistoryEvents()) {
                 is DataResult.Success -> {
-                    _uiState.emit(UiState.Loaded(data.copy(favorites = result.data)))
+                    _uiState.emit(UIState.Success(data.copy(favorites = result.data)))
                 }
                 is DataResult.Error -> {
                     Logger.e(result.e.localizedMessage ?: "UNKNOWN_ERROR")
@@ -55,11 +54,11 @@ class HomeDetailVM @AssistedInject constructor(
     }
 
     private suspend fun insertFavorite(historyEvent: HistoryEvent) {
-        if (_uiState.value is UiState.Loaded) {
-            val data = (_uiState.value as UiState.Loaded).data
+        if (_uiState.value is UIState.Success) {
+            val data = (_uiState.value as UIState.Success).data
             when (val result = spaceXUseCase.insertHistoryEvent(historyEvent)) {
                 is DataResult.Success -> {
-                    _uiState.emit(UiState.Loaded(data.copy(favorites = result.data)))
+                    _uiState.emit(UIState.Success(data.copy(favorites = result.data)))
                 }
                 is DataResult.Error -> {
                     Logger.e(result.e.localizedMessage ?: "UNKNOWN_ERROR")
@@ -69,11 +68,11 @@ class HomeDetailVM @AssistedInject constructor(
     }
 
     private suspend fun deleteFavorite(historyEvent: HistoryEvent) {
-        if (_uiState.value is UiState.Loaded) {
-            val data = (_uiState.value as UiState.Loaded).data
+        if (_uiState.value is UIState.Success) {
+            val data = (_uiState.value as UIState.Success).data
             when (val result = spaceXUseCase.deleteHistoryEvent(historyEvent)) {
                 is DataResult.Success -> {
-                    _uiState.emit(UiState.Loaded(data.copy(favorites = result.data)))
+                    _uiState.emit(UIState.Success(data.copy(favorites = result.data)))
                 }
                 is DataResult.Error -> {
                     Logger.e(result.e.localizedMessage ?: "UNKNOWN_ERROR")

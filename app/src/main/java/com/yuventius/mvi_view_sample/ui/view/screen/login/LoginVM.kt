@@ -3,10 +3,10 @@ package com.yuventius.mvi_view_sample.ui.view.screen.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yuventius.domain.use_case.PrefUseCase
-import com.yuventius.mvi_view_sample.ui.view.base.UiState
+import com.yuventius.mvi_view_sample.ui.view.base.BaseVM
+import com.yuventius.mvi_view_sample.ui.view.base.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flow
@@ -16,10 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginVM @Inject constructor(
     private val prefUseCase: PrefUseCase
-): ViewModel() {
-    private val _uiState = MutableStateFlow<UiState<LoginState>>(UiState.Loaded(LoginState()))
-    val uiState = _uiState.asStateFlow()
-
+): BaseVM<LoginState>() {
     init {
         viewModelScope.launch {
             prefUseCase.getLoginInfo().collect {
@@ -40,28 +37,18 @@ class LoginVM @Inject constructor(
         }
     }
 
-    private suspend fun setEmail(email: String) {
-        (_uiState.value as? UiState.Loaded<LoginState>)?.data?.copy(email = email)?.let {
-            _uiState.emit(UiState.Loaded(it))
-        }
-    }
+    private suspend fun setEmail(email: String) = reduce(getData().copy(email = email))
 
-    private suspend fun setPassword(password: String) {
-        (_uiState.value as? UiState.Loaded<LoginState>)?.data?.copy(password = password)?.let {
-            _uiState.emit(UiState.Loaded(it))
-        }
-    }
+    private suspend fun setPassword(password: String) = reduce(getData().copy(password = password))
 
     private suspend fun login() {
-        (_uiState.value as? UiState.Loaded<LoginState>)?.data?.let {
-            _uiState.emit(UiState.Loaded(it.copy(loginPending = true, loginFailed = false, loginSucceed = false)))
-            checkLogin(it.email, it.password).collect { result ->
-                if (result) {
-                    prefUseCase.saveLoginInfo(it.email, it.password)
-                    _uiState.emit(UiState.Loaded(it.copy(loginPending = false, loginFailed = false, loginSucceed = true)))
-                } else {
-                    _uiState.emit(UiState.Loaded(it.copy(loginPending = false, loginFailed = true, loginSucceed = false)))
-                }
+        reduce(getData().copy(loginPending = true, loginFailed = false, loginSucceed = false))
+        checkLogin(getData().email, getData().password).collect { result ->
+            if (result) {
+                prefUseCase.saveLoginInfo(getData().email, getData().password)
+                reduce(getData().copy(loginPending = false, loginFailed = false, loginSucceed = true))
+            } else {
+                reduce(getData().copy(loginPending = false, loginFailed = true, loginSucceed = false))
             }
         }
     }

@@ -24,11 +24,10 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Popup
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.yuventius.mvi_view_sample.ext.root
-import com.yuventius.mvi_view_sample.ui.view.base.UiState
+import com.yuventius.mvi_view_sample.ui.view.base.UIState
 import com.yuventius.mvi_view_sample.ui.view.component.CustomTextField
 import com.yuventius.mvi_view_sample.ui.view.screen.Screen
 
@@ -47,13 +46,13 @@ fun LoginView(
             .fillMaxSize()
     ) {
         when (uiState.value) {
-            UiState.Failed -> Text(text = "UNKNOWN ERROR")
-            UiState.Loading -> CircularProgressIndicator(
+            UIState.Error -> Text(text = "UNKNOWN ERROR")
+            UIState.Loading -> CircularProgressIndicator(
                 modifier = Modifier
                     .align(Alignment.Center)
             )
-            is UiState.Loaded -> {
-                val data = (uiState.value as UiState.Loaded).data
+            is UIState.Success -> {
+                val data = (uiState.value as UIState.Success).data
                 Column(
                     modifier = Modifier
                         .align(Alignment.BottomCenter),

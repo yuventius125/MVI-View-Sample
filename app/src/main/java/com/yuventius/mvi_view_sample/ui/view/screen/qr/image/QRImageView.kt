@@ -20,7 +20,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.navigation.NavController
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
-import com.yuventius.mvi_view_sample.ui.view.base.UiState
+import com.yuventius.mvi_view_sample.ui.view.base.UIState
 
 @Composable
 fun QRImageView(
@@ -30,7 +30,7 @@ fun QRImageView(
     onCreate: () -> Unit = {}
 ) {
     val context = LocalContext.current
-    val state = vm.state.collectAsState()
+    val state = vm.uiState.collectAsState()
     val scope = rememberCoroutineScope()
 
     Box(
@@ -38,9 +38,9 @@ fun QRImageView(
             .fillMaxSize()
     ) {
         when (state.value) {
-            UiState.Loading -> CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            is UiState.Loaded -> {
-                val data = (state.value as UiState.Loaded).data
+            UIState.Loading -> CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            is UIState.Success -> {
+                val data = (state.value as UIState.Success).data
 
                 Image(
                     modifier = Modifier
@@ -59,7 +59,7 @@ fun QRImageView(
                     Text(text = "이미지 저장")
                 }
             }
-            UiState.Failed -> {}
+            UIState.Error -> {}
         }
 
         LifecycleEventEffect(event = Lifecycle.Event.ON_CREATE) {

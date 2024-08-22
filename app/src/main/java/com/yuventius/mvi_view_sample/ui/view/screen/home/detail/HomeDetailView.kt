@@ -33,7 +33,7 @@ import androidx.navigation.NavController
 import com.yuventius.domain.model.HistoryEvent
 import com.yuventius.mvi_view_sample.ext.toFormattedString
 import com.yuventius.mvi_view_sample.ext.toLocalDateTimeByUTC
-import com.yuventius.mvi_view_sample.ui.view.base.UiState
+import com.yuventius.mvi_view_sample.ui.view.base.UIState
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -57,14 +57,14 @@ fun HomeDetailView (
     ) {
         with(sharedTransitionScope) {
             when (uiState.value) {
-                is UiState.Failed -> Text(
+                is UIState.Error -> Text(
                     modifier = Modifier
                         .align(Alignment.Center),
                     text = "UNKNOWN ERROR"
                 )
-                is UiState.Loading -> CircularProgressIndicator()
-                is UiState.Loaded -> {
-                    val data = (uiState.value as UiState.Loaded).data
+                is UIState.Loading -> CircularProgressIndicator()
+                is UIState.Success -> {
+                    val data = (uiState.value as UIState.Success).data
 
                     Column(
                         modifier = Modifier.fillMaxSize()

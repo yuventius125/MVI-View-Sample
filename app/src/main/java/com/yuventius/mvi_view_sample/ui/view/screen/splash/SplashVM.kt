@@ -4,7 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yuventius.mvi_view_sample.BuildConfig
 import com.yuventius.mvi_view_sample.ext.toCompareVersion
-import com.yuventius.mvi_view_sample.ui.view.base.UiState
+import com.yuventius.mvi_view_sample.ui.view.base.BaseVM
+import com.yuventius.mvi_view_sample.ui.view.base.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -17,9 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashVM @Inject constructor(
 
-): ViewModel() {
-    private val _uiState = MutableStateFlow<UiState<SplashState>>(UiState.Loading)
-    val uiState = _uiState.asStateFlow()
+): BaseVM<SplashState>() {
 
     fun onEvent(event: SplashEvent) {
         viewModelScope.launch {
@@ -32,14 +31,10 @@ class SplashVM @Inject constructor(
     private suspend fun getVersion(serverVersion: String?) {
         serverVersion?.let {
             getFakeVersion(serverVersion).collect { version ->
-                _uiState.emit(
-                    UiState.Loaded(SplashState(needUpdate = BuildConfig.VERSION_NAME.toCompareVersion(version)))
-                )
+                reduce(SplashState(needUpdate = BuildConfig.VERSION_NAME.toCompareVersion(version)))
             }
         } ?: run {
-            _uiState.emit(
-                UiState.Failed
-            )
+            reduce(uiState = UIState.Error)
         }
     }
 

@@ -31,7 +31,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.navigation.NavController
 import com.yuventius.mvi_view_sample.ext.route
-import com.yuventius.mvi_view_sample.ui.view.base.UiState
+import com.yuventius.mvi_view_sample.ui.view.base.UIState
 import com.yuventius.mvi_view_sample.ui.view.component.CustomTextField
 import com.yuventius.mvi_view_sample.ui.view.screen.Screen
 
@@ -42,7 +42,7 @@ fun QRView(
     onCreate: () -> Unit = {}
 ) {
     val context = LocalContext.current
-    val state = vm.state.collectAsState()
+    val state = vm.uiState.collectAsState()
     val scope = rememberCoroutineScope()
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
@@ -53,8 +53,8 @@ fun QRView(
             .fillMaxSize()
     ) {
         when (state.value) {
-            is UiState.Loaded -> {
-                val data = (state.value as UiState.Loaded).data
+            is UIState.Success -> {
+                val data = (state.value as UIState.Success).data
 
                 Row(
                     modifier = Modifier

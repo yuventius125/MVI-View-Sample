@@ -25,7 +25,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.navigation.NavController
 import com.yuventius.mvi_view_sample.ext.route
-import com.yuventius.mvi_view_sample.ui.view.base.UiState
+import com.yuventius.mvi_view_sample.ui.view.base.UIState
 import com.yuventius.mvi_view_sample.ui.view.screen.Screen
 import com.yuventius.mvi_view_sample.ui.view.screen.home.component.SpaceXHistoryItemView
 import kotlinx.serialization.encodeToString
@@ -50,19 +50,19 @@ fun HomeView (
             .fillMaxSize(),
     ) {
         when (uiState.value) {
-            UiState.Failed -> Text(
+            UIState.Error -> Text(
                 modifier = Modifier
                     .align(Alignment.Center),
                 text = "UNKNOWN ERROR"
             )
-            UiState.Loading -> {
+            UIState.Loading -> {
                 CircularProgressIndicator(
                     modifier = Modifier
                         .align(Alignment.Center)
                 )
             }
-            is UiState.Loaded -> {
-                val data = (uiState.value as UiState.Loaded).data
+            is UIState.Success -> {
+                val data = (uiState.value as UIState.Success).data
                 LazyColumn (
                     state = listState,
                     userScrollEnabled = true,

@@ -23,12 +23,11 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.navigation.NavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
-import com.google.accompanist.permissions.rememberPermissionState
 import com.lukus.media_extension.MediaUtil
 import com.yuventius.mvi_view_sample.BuildConfig
 import com.yuventius.mvi_view_sample.ext.root
 import com.yuventius.mvi_view_sample.ext.url
-import com.yuventius.mvi_view_sample.ui.view.base.UiState
+import com.yuventius.mvi_view_sample.ui.view.base.UIState
 import com.yuventius.mvi_view_sample.ui.view.screen.Screen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -62,7 +61,7 @@ fun SplashView(
             verticalArrangement = Arrangement.Center
         ) {
             when (uiState.value) {
-                is UiState.Loading -> {
+                is UIState.Loading -> {
                     CircularProgressIndicator()
 
                     LifecycleEventEffect(event = Lifecycle.Event.ON_CREATE) {
@@ -86,8 +85,8 @@ fun SplashView(
                         vm.onEvent(SplashEvent.CheckVersion(tempVersion = "1.0"))
                     }
                 }
-                is UiState.Loaded<SplashState> -> {
-                    val data = (uiState.value as UiState.Loaded<SplashState>).data
+                is UIState.Success<SplashState> -> {
+                    val data = (uiState.value as UIState.Success<SplashState>).data
 
                     if (data.needUpdate) {
                         Text(
@@ -113,7 +112,7 @@ fun SplashView(
                         }
                     }
                 }
-                is UiState.Failed -> {
+                is UIState.Error -> {
                     Text(
                         text = "네트워크 에러",
                         fontWeight = FontWeight.Bold,

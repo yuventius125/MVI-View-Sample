@@ -1,7 +1,6 @@
 package com.yuventius.mvi_view_sample.ui.view.screen.home
 
 import com.yuventius.domain.model.HistoryEvent
-import com.yuventius.mvi_view_sample.ui.view.base.Copyable
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -10,6 +9,4 @@ import kotlinx.serialization.json.Json
 data class HomeState (
     val remoteHistories: List<HistoryEvent> = emptyList(),
     val localHistories: List<HistoryEvent> = emptyList(),
-): Copyable<HomeState> {
-    override fun copy(): HomeState = Json.decodeFromString(Json.encodeToString(this))
-}
+)

@@ -20,7 +20,7 @@ sealed class Screen(val route: String) {
     }
     sealed class Route {
         data object HistoryDetail: Screen("history_detail?historyItem={historyItem}")
-        data object QRImage: Screen("qr_image/{qrString}")
+        data object QRImage: Screen("qr_image?qrString={qrString}")
         data object QRCamera: Screen("qr_camera")
     }
 }

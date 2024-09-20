@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.io.FileNotFoundException
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,8 +43,7 @@ class QRImageVM @Inject constructor(
     private suspend fun saveImage() {
         reduce(getData().copy(pendingSaveImage = true))
         val values = ContentValues().apply {
-            val value = getData().qrString!!.decrypt()
-            put(MediaStore.Images.Media.DISPLAY_NAME, "QRImage_$value.png")
+            put(MediaStore.Images.Media.DISPLAY_NAME, "QRImage_${System.currentTimeMillis()}.png")
             put(MediaStore.Images.Media.MIME_TYPE, "image/png")
             put(MediaStore.Images.Media.IS_PENDING, 1)
         }

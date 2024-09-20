@@ -1,5 +1,6 @@
 package com.yuventius.mvi_view_sample.ui.view.screen.qr
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,9 +22,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -34,6 +37,7 @@ import com.yuventius.mvi_view_sample.ext.route
 import com.yuventius.mvi_view_sample.ui.view.base.UIState
 import com.yuventius.mvi_view_sample.ui.view.component.CustomTextField
 import com.yuventius.mvi_view_sample.ui.view.screen.Screen
+import com.yuventius.mvi_view_sample.util.AppConst
 
 @Composable
 fun QRView(
@@ -47,6 +51,7 @@ fun QRView(
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
+    val clipboardManager = LocalClipboardManager.current
 
     Box(
         modifier = Modifier
@@ -97,7 +102,10 @@ fun QRView(
                 ) {
                     Text(
                         modifier = Modifier
-                            .padding(12.dp),
+                            .padding(12.dp)
+                            .clickable {
+                                clipboardManager.setText(AnnotatedString(data.qrString))
+                            },
                         text = data.qrString
                     )
 
@@ -109,7 +117,7 @@ fun QRView(
                             onClick = {
                                 if (data.qrString.isNotBlank()) {
                                     navController.route(
-                                        Screen.Route.QRImage, mapOf("qrString" to data.qrString)
+                                        Screen.Route.QRImage, mapOf("qrString" to "${AppConst.DEFAULT_PAGE_URL}?pid=${data.qrString}")
                                     )
                                 }
                             }

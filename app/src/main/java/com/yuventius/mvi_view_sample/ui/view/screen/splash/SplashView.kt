@@ -106,8 +106,8 @@ fun SplashView(
                             scope.launch {
                                 delay(2000L)
 //                                navController.root(Screen.Root.Login)
-//                                navController.root(Screen.Root.QR)
-                                navController.root(Screen.Root.Record)
+                                navController.root(Screen.Root.QR)
+//                                navController.root(Screen.Root.Record)
                             }
                         }
                     }

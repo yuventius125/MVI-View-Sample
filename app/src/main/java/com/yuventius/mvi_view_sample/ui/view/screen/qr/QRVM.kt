@@ -15,6 +15,12 @@ import javax.inject.Inject
 class QRVM @Inject constructor(
 
 ): BaseVM<QRState>() {
+    init {
+        viewModelScope.launch {
+            reduce(data = QRState())
+        }
+    }
+
     fun onEvent(event: QREvent) {
         viewModelScope.launch {
             when (event) {

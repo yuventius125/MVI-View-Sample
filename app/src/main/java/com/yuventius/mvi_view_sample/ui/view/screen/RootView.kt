@@ -103,9 +103,7 @@ fun RootView(
             }
             navigation(route = Screen.Root.QR.ROOT, startDestination = Screen.Root.QR.route) {
                 composable(Screen.Root.QR.route) {
-                    QRView(navController = navController) {
-                        changeAppBarState(null)
-                    }
+                    QRView(navController = navController)
                 }
                 composable(
                     Screen.Route.QRImage.route,
